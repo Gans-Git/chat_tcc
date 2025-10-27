@@ -1,0 +1,20 @@
+[
+  {
+    "tag_name": "entity",
+    "ids_to_tags": {
+      "1": "B-sentimento",
+      "2": "I-sentimento",
+      "3": "L-sentimento",
+      "4": "U-sentimento",
+      "0": "O"
+    },
+    "tags_to_ids": {
+      "B-sentimento": 1,
+      "I-sentimento": 2,
+      "L-sentimento": 3,
+      "U-sentimento": 4,
+      "O": 0
+    },
+    "num_tags": 5
+  }
+]

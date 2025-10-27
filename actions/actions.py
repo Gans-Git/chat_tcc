@@ -7,7 +7,7 @@ from typing import Any, Text, Dict, List
 from rasa_sdk.forms import FormValidationAction
 from rasa_sdk.types import DomainDict
 # AQUI ESTÁ A CORREÇÃO PRINCIPAL: Adicionamos SlotSet à lista de importação
-from rasa_sdk.events import SlotSet, ActionExecutionRejected, EventType, FollowupAction
+from rasa_sdk.events import SlotSet, ActionExecutionRejected, EventType, FollowupAction, ActiveLoop
 
 
 # ==============================================================================
@@ -107,38 +107,49 @@ class ActionAnalisarESugerir(Action):
             dispatcher.utter_message(text=mensagem_neutra)
 
         else:
-            # --- Caminho para TODAS as outras Emoções (Tristeza, Medo, etc.) ---
-            dicas = {
-                "tristeza": "Sinto muito que você esteja passando por isso. Nesses momentos, ser gentil consigo mesmo é o mais importante. Que tal tentar ouvir uma música que te conforta ou escrever sobre seus sentimentos sem julgamento?",
-                "medo": "É normal sentir medo. Tente encontrar um cantinho seguro e prestar atenção na sua respiração, sentindo o ar entrar e sair. Isso pode trazer uma sensação de calma.",
-                "raiva": "A raiva é uma emoção forte e que precisa de espaço. Talvez se afastar um pouco da situação e focar na sua respiração por alguns minutos possa te ajudar a ver as coisas com mais clareza.",
-                "alegria": "Que maravilha sentir essa alegria! Fico feliz por você. Uma dica para cultivá-la é compartilhar essa energia boa com alguém ou fazer algo que você ama.",
-            }
-        dica = dicas.get(emocao, "Lembre-se sempre de ser gentil com você mesmo. Pequenas pausas durante o dia fazem uma grande diferença.")
+            # --- Caminho para Emoções Não-Neutras ---
 
-        mensagem_acolhimento_e_dica = (
-            f"Obrigado por compartilhar. Pelo que você contou, parece haver um sentimento de {emocao}, e é totalmente compreensível se sentir assim. "
-            f"Uma pequena prática de autocuidado que talvez possa ajudar: {dica}"
-        )
-        dispatcher.utter_message(text=mensagem_acolhimento_e_dica)
-
-        # --- PARTE DA "PONTE INFORMACIONAL" (Continua igual) ---
-        mapa_emocao_para_topico = {
-            "tristeza": {"nome_topico": "Depressão", "intent_payload": "/buscar_info_depressao"},
-            "medo": {"nome_topico": "Ansiedade", "intent_payload": "/buscar_info_ansiedade"}
-        }
-
-        if emocao in mapa_emocao_para_topico:
-            topico = mapa_emocao_para_topico[emocao]
-            botoes = [
-                {"title": f"Sim, quero saber sobre {topico['nome_topico']}", "payload": topico['intent_payload']},
-                {"title": "Não, obrigado(a)", "payload": "/negar_sugestao"}
-            ]
-            mensagem_ponte = (
-                f"\nA propósito, sentimentos de {emocao} quando persistentes, às vezes estão relacionados a quadros de {topico['nome_topico']}. "
-                "Isto não é um diagnóstico. Gostaria de aprender mais sobre isso?"
+            # Mensagem 1: Acolhimento
+            mensagem_acolhimento = (
+                f"Obrigado(a) por compartilhar. Percebo um sentimento de {emocao} na sua mensagem, "
+                "e quero que saiba que é totalmente compreensível se sentir assim."
             )
-            dispatcher.utter_message(text=mensagem_ponte, buttons=botoes)
+            # Adiciona uma frase extra de empatia para tristeza/medo/raiva
+            if emocao in ["tristeza", "medo", "raiva"]:
+                 mensagem_acolhimento += f" Sinto muito que esteja passando por isso."
+
+            dispatcher.utter_message(text=mensagem_acolhimento)
+
+            # Mensagem 2: Dica de Autocuidado
+            dicas = {
+                "tristeza": "Nesses momentos, ser gentil consigo mesmo é o mais importante. Que tal tentar ouvir uma música que te conforta ou escrever sobre seus sentimentos sem julgamento?",
+                "medo": "Tente encontrar um cantinho seguro e prestar atenção na sua respiração, sentindo o ar entrar e sair. Focar na respiração pode trazer uma sensação de calma.",
+                "raiva": "A raiva é uma emoção forte. Tentar se afastar um pouco da situação e respirar fundo por alguns minutos pode ajudar a ver as coisas com mais clareza.",
+                "alegria": "Que maravilha sentir essa alegria! Fico feliz por você. Uma dica para cultivá-la é compartilhar essa energia boa com alguém ou fazer algo que você ama.",
+                # Se cair aqui por algum motivo, usa a dica genérica
+            }
+            dica = dicas.get(emocao, "Lembre-se sempre de ser gentil com você mesmo(a). Pequenas pausas durante o dia fazem uma grande diferença.")
+
+            mensagem_dica = f"Pensando nisso, talvez uma pequena prática de autocuidado possa ajudar: {dica}"
+            dispatcher.utter_message(text=mensagem_dica)
+
+            # Lógica da "Ponte Informacional" (continua igual)
+            mapa_emocao_para_topico = {
+                "tristeza": {"nome_topico": "Depressão", "intent_payload": "/buscar_info_depressao"},
+                "medo": {"nome_topico": "Ansiedade", "intent_payload": "/buscar_info_ansiedade"}
+            }
+
+            if emocao in mapa_emocao_para_topico:
+                topico = mapa_emocao_para_topico[emocao]
+                botoes = [
+                    {"title": f"Sim, quero saber sobre {topico['nome_topico']}", "payload": topico['intent_payload']},
+                    {"title": "Não, obrigado(a)", "payload": "/negar_sugestao"}
+                ]
+                mensagem_ponte = (
+                    f"\nA propósito, sentimentos de {emocao} quando persistentes, às vezes estão relacionados a quadros de {topico['nome_topico']}. "
+                    "Isto não é um diagnóstico. Gostaria de aprender mais sobre isso?"
+                )
+                dispatcher.utter_message(text=mensagem_ponte, buttons=botoes)
 
         return []
 
@@ -162,11 +173,18 @@ class ActionHandleMenuChoice(Action):
 
         if opcao == "desabafo":
             dispatcher.utter_message(response="utter_desabafo")
+            return [] 
         elif opcao == "aprendizado":
             dispatcher.utter_message(response="utter_aprendizado")
+            return []
         elif opcao == "dica_autocuidado":
             dispatcher.utter_message(response="utter_dica_generica")
+            return []
         elif opcao == "autoavaliacao":
-            return [FollowupAction("action_autoavaliacao_form")]
+            # CORREÇÃO CRÍTICA: Ativa o loop do formulário corretamente
+            dispatcher.utter_message(response="utter_disclaimer_autoavaliacao") # Dá o aviso antes
+            return [ActiveLoop("autoavaliacao_form")] # Inicia o loop do form
         
+        # Caso alguma opção inesperada chegue (segurança)
+        dispatcher.utter_message(response="utter_default")
         return []

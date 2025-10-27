@@ -46,6 +46,14 @@ nlu:
     - estou [pensativo](sentimento)
     - não sei como me sinto
     - as coisas estão meio estranhas
+    - to com [raiva](sentimento)             # <-- ADICIONE
+    - estou com [raiva](sentimento)          # <-- ADICIONE
+    - que [raiva](sentimento)                # <-- ADICIONE
+    - estou [irritado](sentimento)           # <-- ADICIONE
+    - me sinto [bravo](sentimento)           # <-- ADICIONE
+    - que [ódio](sentimento)                 # <-- ADICIONE
+    - estou furioso                          # <-- ADICIONE (sem entidade, para variedade)
+    - ele me deixou com [raiva](sentimento)  # <-- ADICIONE
 - intent: afirmar_bem_estar
   examples: |
     - eu to feliz
@@ -71,7 +79,18 @@ nlu:
     - não, obrigado
     - não quero
     - agora não
-
+- intent: buscar_info_medicamento
+  examples: |
+    - posso tomar remédio para ansiedade?
+    - qual medicamento é bom para depressão?
+    - fluoxetina ajuda?
+    - rivotril tem muito efeito colateral?
+    - me recomenda algum remédio?
+    - deveria tomar medicação?
+    - remedio para dormir
+    - existe medicamento pra isso?
+    - falar sobre remedios
+    - medicamentos
 # === INTENÇÕES DE EMERGÊNCIA E BUSCA POR AJUDA ===
 - intent: pedir_ajuda_urgente
   examples: |

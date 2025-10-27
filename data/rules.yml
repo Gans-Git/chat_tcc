@@ -18,7 +18,6 @@ rules:
   steps:
   - intent: escolher_conversa
   - action: action_handle_menu_choice
-  - action: action_listen
 
 # --- LÓGICA DO FORMULÁRIO ---
 - rule: Finalizar o formulário de autoavaliação
@@ -70,4 +69,10 @@ rules:
   steps:
   - intent: nlu_fallback
   - action: utter_default
+  - action: action_listen
+
+- rule: Recusar dar informações sobre medicamentos
+  steps:
+  - intent: buscar_info_medicamento
+  - action: utter_nao_recomenda_medicamento
   - action: action_listen

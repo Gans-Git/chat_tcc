@@ -41,6 +41,7 @@ entities:
   - sentimento
   - opcao
   - frequencia
+  - buscar_info_medicamento
 
 # --- SLOTS ---
 # A memória do bot. Usado para armazenar informações durante a conversa.
@@ -84,7 +85,7 @@ responses:
   utter_saudacao:
     - text: "Olá! Sou seu assistente de apoio à saúde mental. Como posso te ajudar hoje? Você pode escolher uma das opções:"
       buttons:
-        - title: "Quero desabaafar"
+        - title: "Quero desabafar"
           payload: '/escolher_conversa{{"opcao": "desabafo"}}'
         - title: "Quero aprender sobre saúde mental"
           payload: '/escolher_conversa{{"opcao": "aprendizado"}}'
@@ -123,7 +124,9 @@ responses:
   utter_encerrar:
    - text: "Entendido. Lembre-se de ser gentil consigo mesmo(a). Estarei por aqui se precisar conversar de novo."
    - text: "Tudo bem. Fico feliz em ter conversado com você. Se cuide e saiba que pode voltar quando quiser."
-
+  utter_nao_recomenda_medicamento:
+    - text: "Sobre medicamentos, é **muito importante** que você converse diretamente com um médico ou psiquiatra. Eu sou um chatbot e **não posso** dar nenhuma recomendação ou opinião sobre remédios, dosagens ou efeitos colaterais. Apenas um profissional de saúde qualificado pode avaliar sua situação e indicar o tratamento adequado, se necessário."
+    - text: "Entendo que você tenha dúvidas sobre medicamentos, mas essa é uma área exclusivamente médica. **Eu não tenho conhecimento nem autorização para falar sobre isso.** Por favor, procure um médico para discutir qualquer questão relacionada a remédios. Ele é a pessoa certa para te orientar com segurança."
   # --- Respostas de Chitchat e Afirmações ---
   utter_que_bom:
     - text: "Que notícia maravilhosa! Fico muito feliz em saber que você está se sentindo bem. 🎉"
