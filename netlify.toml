@@ -1,0 +1,11 @@
+[build]
+  # Explicitly tell Netlify to do nothing during the build step
+  command = "echo 'No build required, deploying static files.'"
+
+  # Tell Netlify where the finished site files are (the root in our case)
+  publish = "/" 
+
+[build.environment]
+  # Explicitly tell Netlify NOT to install Python dependencies
+  # We do this by overriding the default pip install command
+  PIP_INSTALL_COMMAND = "echo 'Skipping pip install.'"
