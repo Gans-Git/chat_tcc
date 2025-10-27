@@ -125,7 +125,7 @@ responses:
    - text: "Entendido. Lembre-se de ser gentil consigo mesmo(a). Estarei por aqui se precisar conversar de novo."
    - text: "Tudo bem. Fico feliz em ter conversado com você. Se cuide e saiba que pode voltar quando quiser."
   utter_nao_recomenda_medicamento:
-    - text: "Sobre medicamentos, é **muito importante** que você converse diretamente com um médico ou psiquiatra. Eu sou um chatbot e **não posso** dar nenhuma recomendação ou opinião sobre remédios, dosagens ou efeitos colaterais. Apenas um profissional de saúde qualificado pode avaliar sua situação e indicar o tratamento adequado, se necessário."
+    - text: "Sobre medicamentos, é <b>muito importante</b> que você converse diretamente com um médico ou psiquiatra. Eu sou um chatbot e <b>não posso</b> dar nenhuma recomendação ou opinião sobre remédios, dosagens ou efeitos colaterais. Apenas um profissional de saúde qualificado pode avaliar sua situação e indicar o tratamento adequado, se necessário."
     - text: "Entendo que você tenha dúvidas sobre medicamentos, mas essa é uma área exclusivamente médica. **Eu não tenho conhecimento nem autorização para falar sobre isso.** Por favor, procure um médico para discutir qualquer questão relacionada a remédios. Ele é a pessoa certa para te orientar com segurança."
   # --- Respostas de Chitchat e Afirmações ---
   utter_que_bom:
@@ -161,7 +161,7 @@ responses:
 
   # --- Respostas do Formulário de Autoavaliação ---
   utter_disclaimer_autoavaliacao:
-    - text: "Vamos começar. Lembre-se: esta é uma breve autoavaliação e **NÃO substitui um diagnóstico profissional**. O objetivo é apenas te ajudar a refletir sobre seus sentimentos."
+    - text: "Vamos começar. Lembre-se: esta é uma breve autoavaliação e <b>NÃO substitui um diagnóstico profissional</b>. O objetivo é apenas te ajudar a refletir sobre seus sentimentos."
   utter_ask_sente_nervoso:
     - text: "Ok, primeira pergunta: Nas últimas 2 semanas, com que frequência você se sentiu nervoso(a), ansioso(a) ou muito tenso(a)?"
       buttons:
@@ -189,7 +189,7 @@ responses:
 
   # --- Respostas de Encaminhamento e Emergência ---
   utter_ajuda_urgente:
-    - text: "Percebi que você está passando por um momento muito difícil e agradeço por compartilhar isso. Por favor, não hesite em procurar ajuda imediatamente. **Ligue para o CVV (Centro de Valorização da Vida) no número 188.** A ligação é gratuita e eles estão disponíveis 24 horas por dia para te ouvir. Você não está sozinho(a)."
+    - text: "Percebi que você está passando por um momento muito difícil e agradeço por compartilhar isso. Por favor, não hesite em procurar ajuda imediatamente. <b>Ligue para o CVV (Centro de Valorização da Vida) no número 188.</b> A ligação é gratuita e eles estão disponíveis 24 horas por dia para te ouvir. Você não está sozinho(a)."
   utter_ajuda_profissional:
     - text: "Buscar ajuda profissional é um passo muito corajoso e importante. Separei alguns recursos que podem te ajudar a começar. Lembre-se que não tenho afiliação com nenhum deles, são apenas sugestões:"
       buttons:
