@@ -1,0 +1,83 @@
+# ==============================================================================
+# STORIES.YML - EXEMPLOS DE FLUXOS DE CONVERSA
+# As histórias ensinam ao bot como lidar com sequências de diálogo mais longas
+# e flexíveis, que não são fixas o suficiente para serem regras. A TEDPolicy
+# aprende com estes exemplos para generalizar e lidar com novas conversas.
+# ==============================================================================
+
+version: "3.1"
+
+stories:
+
+# --- FLUXOS DE DESABAFO ---
+# Note que estas histórias começam DEPOIS da escolha do menu,
+# pois a parte inicial já é coberta por uma regra em rules.yml.
+
+- story: Fluxo de desabafo (completo)
+  steps:
+  # O usuário expressa um sentimento, acionando a análise de emoção.
+  - intent: expressar_sentimento
+  - action: action_analisar_e_sugerir
+
+- story: Desabafo encerrado pelo usuário
+  steps:
+  # O usuário decide não continuar a conversa após ser convidado a desabafar.
+  - intent: nao_continuar_desabafo
+  - action: utter_encerrar
+
+- story: Usuário continua o desabafo
+  steps:
+  # O usuário, após receber a primeira mensagem de apoio, decide continuar.
+  - intent: continuar_desabafo
+  - action: utter_desabafo
+
+# --- FLUXOS DE ESTADO EMOCIONAL E SUGESTÕES ---
+
+- story: Usuário se sente bem
+  steps:
+  - intent: afirmar_bem_estar
+  - action: utter_que_bom
+  - action: action_listen
+
+- story: Usuário nega a sugestão de aprender mais
+  steps:
+  # Este fluxo ocorre quando, após um desabafo, o bot oferece
+  # para falar sobre um transtorno e o usuário recusa.
+  - intent: negar_sugestao
+  - action: utter_ok_sem_problemas
+  - action: action_listen
+
+# --- FLUXOS DA BASE DE CONHECIMENTO ---
+# Histórias simples para quando o usuário digita diretamente uma pergunta
+# sobre um transtorno específico. O action_listen no final é CRUCIAL
+# para garantir que o bot volte a ouvir após dar a informação.
+
+- story: Usuário pergunta sobre ansiedade
+  steps:
+  - intent: buscar_info_ansiedade
+  - action: utter_info_ansiedade
+  - action: action_listen
+
+- story: Usuário pergunta sobre depressão
+  steps:
+  - intent: buscar_info_depressao
+  - action: utter_info_depressao
+  - action: action_listen
+
+- story: Usuário pergunta sobre TDAH
+  steps:
+  - intent: buscar_info_tdah
+  - action: utter_info_tdah
+  - action: action_listen
+
+- story: Usuário pergunta sobre TOC
+  steps:
+  - intent: buscar_info_toc
+  - action: utter_info_toc
+  - action: action_listen
+
+- story: Usuário pergunta sobre TEPT
+  steps:
+  - intent: buscar_info_tept
+  - action: utter_info_tept
+  - action: action_listen

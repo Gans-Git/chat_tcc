@@ -1,0 +1,57 @@
+{
+  "lookup": {
+    "rules": {
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"chitchat_como_vai\"}}]": "utter_chitchat_como_vai",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"chitchat_como_vai\"}}, {\"prev_action\": {\"action_name\": \"utter_chitchat_como_vai\"}, \"user\": {\"intent\": \"chitchat_como_vai\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"chitchat_quem_e_voce\"}}]": "utter_chitchat_quem_e_voce",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"chitchat_quem_e_voce\"}}, {\"prev_action\": {\"action_name\": \"utter_chitchat_quem_e_voce\"}, \"user\": {\"intent\": \"chitchat_quem_e_voce\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"entities\": [\"opcao\"], \"intent\": \"escolher_conversa\"}}]": "autoavaliacao_form",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"entities\": [\"opcao\"], \"intent\": \"escolher_conversa\"}}, {\"active_loop\": {\"name\": \"autoavaliacao_form\"}, \"prev_action\": {\"action_name\": \"autoavaliacao_form\"}, \"user\": {\"entities\": [\"opcao\"], \"intent\": \"escolher_conversa\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saudacao\"}}]": "utter_saudacao",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saudacao\"}}, {\"prev_action\": {\"action_name\": \"utter_saudacao\"}, \"user\": {\"intent\": \"saudacao\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"escolher_conversa\"}}]": "action_handle_menu_choice",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"escolher_conversa\"}}, {\"prev_action\": {\"action_name\": \"action_handle_menu_choice\"}, \"user\": {\"intent\": \"escolher_conversa\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"despedida\"}}]": "utter_despedida",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"despedida\"}}, {\"prev_action\": {\"action_name\": \"utter_despedida\"}, \"user\": {\"intent\": \"despedida\"}}]": "action_listen",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"autoavaliacao_form\"}}]": "action_autoavaliacao_form",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"autoavaliacao_form\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"action_autoavaliacao_form\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"nao_continuar_desabafo\"}}]": "utter_encerrar",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"nao_continuar_desabafo\"}}, {\"prev_action\": {\"action_name\": \"utter_encerrar\"}, \"user\": {\"intent\": \"nao_continuar_desabafo\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"pedir_ajuda_urgente\"}}]": "utter_ajuda_urgente",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"pedir_ajuda_urgente\"}}, {\"prev_action\": {\"action_name\": \"utter_ajuda_urgente\"}, \"user\": {\"intent\": \"pedir_ajuda_urgente\"}}]": "action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"agradecer\"}}]": "utter_agradecer",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"agradecer\"}}, {\"prev_action\": {\"action_name\": \"utter_agradecer\"}, \"user\": {\"intent\": \"agradecer\"}}]": "action_listen"
+    },
+    "rule_only_slots": [],
+    "rule_only_loops": [
+      "autoavaliacao_form"
+    ],
+    "rules_for_loop_unhappy_path": {
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}}, {\"active_loop\": {\"name\": \"autoavaliacao_form\"}, \"prev_action\": {\"action_name\": \"autoavaliacao_form\"}, \"user\": {\"entities\": [\"opcao\"], \"intent\": \"escolher_conversa\"}}]": "do_not_predict_loop_action"
+    },
+    "rules_not_in_stories": [
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"chitchat_como_vai\"}}, {\"prev_action\": {\"action_name\": \"utter_chitchat_como_vai\"}, \"user\": {\"intent\": \"chitchat_como_vai\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"pedir_ajuda_urgente\"}}]",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"autoavaliacao_form\"}}, {\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"action_autoavaliacao_form\"}}]",
+      "predicting default action with intent session_start",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"despedida\"}}, {\"prev_action\": {\"action_name\": \"utter_despedida\"}, \"user\": {\"intent\": \"despedida\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"pedir_ajuda_urgente\"}}, {\"prev_action\": {\"action_name\": \"utter_ajuda_urgente\"}, \"user\": {\"intent\": \"pedir_ajuda_urgente\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saudacao\"}}, {\"prev_action\": {\"action_name\": \"utter_saudacao\"}, \"user\": {\"intent\": \"saudacao\"}}]",
+      "predicting default action with intent restart",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"agradecer\"}}, {\"prev_action\": {\"action_name\": \"utter_agradecer\"}, \"user\": {\"intent\": \"agradecer\"}}]",
+      "handling active loops and forms - autoavaliacao_form",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"chitchat_como_vai\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"chitchat_quem_e_voce\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"chitchat_quem_e_voce\"}}, {\"prev_action\": {\"action_name\": \"utter_chitchat_quem_e_voce\"}, \"user\": {\"intent\": \"chitchat_quem_e_voce\"}}]",
+      "[{\"active_loop\": {\"name\": \"should_not_be_set\"}, \"prev_action\": {\"action_name\": \"autoavaliacao_form\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"escolher_conversa\"}}, {\"prev_action\": {\"action_name\": \"action_handle_menu_choice\"}, \"user\": {\"intent\": \"escolher_conversa\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"escolher_conversa\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"entities\": [\"opcao\"], \"intent\": \"escolher_conversa\"}}]",
+      "predicting default action with intent back",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"agradecer\"}}]",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"despedida\"}}]",
+      "handling active loops and forms - autoavaliacao_form - action_listen",
+      "[{\"prev_action\": {\"action_name\": \"action_listen\"}, \"user\": {\"intent\": \"saudacao\"}}]"
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+[
+  {
+    "name": "transtorno",
+    "pattern": "ansiedade"
+  },
+  {
+    "name": "transtorno",
+    "pattern": "bipolaridade"
+  },
+  {
+    "name": "transtorno",
+    "pattern": "borderline"
+  },
+  {
+    "name": "transtorno",
+    "pattern": "burnout"
+  },
+  {
+    "name": "transtorno",
+    "pattern": "dependencia"
+  },
+  {
+    "name": "transtorno",
+    "pattern": "depressao"
+  },
+  {
+    "name": "transtorno",
+    "pattern": "esquizofrenia"
+  },
+  {
+    "name": "transtorno",
+    "pattern": "estresse"
+  },
+  {
+    "name": "transtorno",
+    "pattern": "fobia"
+  },
+  {
+    "name": "transtorno",
+    "pattern": "luto"
+  },
+  {
+    "name": "transtorno",
+    "pattern": "panico"
+  },
+  {
+    "name": "transtorno",
+    "pattern": "tdah"
+  },
+  {
+    "name": "transtorno",
+    "pattern": "toc"
+  },
+  {
+    "name": "transtorno",
+    "pattern": "transtorno alimentar"
+  }
+]

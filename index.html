@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot de Apoio à Saúde Mental</title>
+    <meta charset="UTF-8">
+    <style>
+        /* CSS para a aparência do chat */
+        body { font-family: sans-serif; background-color: #f4f7f6; }
+        .chat-container { width: 400px; margin: 50px auto; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background-color: white; display: flex; flex-direction: column; height: 600px; }
+        .chat-header { background-color: #2c3e50; color: white; padding: 15px; border-top-left-radius: 10px; border-top-right-radius: 10px; text-align: center; }
+        .chat-log { flex-grow: 1; padding: 10px; overflow-y: auto; display: flex; flex-direction: column; }
+        .chat-message { margin: 5px; padding: 10px; border-radius: 15px; max-width: 70%; word-wrap: break-word; }
+        .user-message { background-color: #3498db; color: white; align-self: flex-end; border-bottom-right-radius: 0; }
+        .bot-message { background-color: #ecf0f1; color: #2c3e50; align-self: flex-start; border-bottom-left-radius: 0; }
+        .bot-message button { background-color: white; color: #3498db; border: 1px solid #3498db; border-radius: 15px; padding: 8px 12px; margin: 5px 5px 0 0; cursor: pointer; transition: all 0.2s; }
+        .bot-message button:hover { background-color: #3498db; color: white; }
+        .bot-message button:disabled { background-color: #ccc; border-color: #ccc; color: #666; cursor: not-allowed; }
+        .input-container { display: flex; border-top: 1px solid #ccc; }
+        #user-input { flex-grow: 1; border: none; padding: 15px; font-size: 16px; outline: none; }
+        #send-button { border: none; background-color: #2c3e50; color: white; padding: 0 20px; cursor: pointer; font-size: 16px; }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <h3>Assistente de Apoio</h3>
+        </div>
+        <div id="chat-log" class="chat-log"></div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Digite sua mensagem...">
+            <button id="send-button">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        const chatLog = document.getElementById('chat-log');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const rasa_server_url = "https://septennial-penney-decanormal.ngrok-free.dev";
+        const sender_id = "user_" + Date.now();
+
+        function appendMessage(text, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('chat-message', sender + '-message');
+            messageElement.innerHTML = text;
+            chatLog.appendChild(messageElement);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+        
+        // AQUI ESTÁ A FUNÇÃO CORRIGIDA
+        function handleButtonClick(payload) {
+            const buttons = document.querySelectorAll('.bot-message button');
+            buttons.forEach(button => button.disabled = true);
+
+            // Se o payload for um comando interno do bot (começa com '/')...
+            if (payload.startsWith('/')) {
+                // ...envia para o Rasa.
+                sendMessageToRasa(payload);
+            } else {
+                // ...senão, assume que é um link e abre em uma nova aba.
+                window.open(payload, '_blank');
+                // Adiciona uma mensagem para avisar o usuário que o link abriu
+                appendMessage("Ok, abrindo o link para você em uma nova aba.", 'bot');
+            }
+        }
+
+        async function sendMessageToRasa(messageText) {
+            try {
+                const response = await fetch(rasa_server_url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sender: sender_id, message: messageText })
+                });
+
+                const botResponses = await response.json();
+                botResponses.forEach(botResponse => {
+                    let messageHtml = botResponse.text;
+                    
+                    if (botResponse.buttons && botResponse.buttons.length > 0) {
+                        messageHtml += "<br>";
+                        botResponse.buttons.forEach(button => {
+                            const payloadString = JSON.stringify(button.payload);
+                            messageHtml += `<button onclick='handleButtonClick(${payloadString})'>${button.title}</button>`;
+                        });
+                    }
+                    
+                    appendMessage(messageHtml, 'bot');
+                });
+
+            } catch (error) {
+                console.error("Erro ao conectar com o servidor Rasa:", error);
+                appendMessage("Desculpe, não consegui me conectar com o servidor. Verifique se o Rasa está rodando com as flags corretas.", 'bot');
+            }
+        }
+
+        function handleSend() {
+            const userText = userInput.value.trim();
+            if (userText) {
+                appendMessage(userText, 'user');
+                sendMessageToRasa(userText);
+                userInput.value = '';
+            }
+        }
+
+        sendButton.addEventListener('click', handleSend);
+        userInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') { handleSend(); }
+        });
+        
+        // Inicia a conversa
+        sendMessageToRasa("/saudacao");
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+# ==============================================================================
+# NLU.YML - DADOS DE TREINAMENTO DO NLU
+# Contém exemplos de frases do usuário para cada intenção. É o "material de
+# estudo" do bot para aprender a entender o que as pessoas dizem.
+# ==============================================================================
+
+version: "3.1"
+
+nlu:
+
+# === INTENÇÕES PRINCIPAIS DE NAVEGAÇÃO E FLUXO ===
+- intent: saudacao
+  examples: |
+    - Olá
+    - Oi
+    - Bom dia
+    - Boa tarde
+    - Boa noite
+- intent: escolher_conversa
+  examples: |
+    - Quero desabafar
+    - Quero aprender sobre saúde mental
+    - Quero fazer uma autoavaliação
+    - Quero uma dica de autocuidado
+    - Gostaria de desabafar
+    - Me fale algo sobre saúde mental
+    - Quero me autoavaliar
+- intent: despedida
+  examples: |
+    - tchau
+    - adeus
+    - até mais
+    - até logo
+    - vou sair agora
+
+# === INTENÇÕES DE SUPORTE EMOCIONAL ===
+- intent: expressar_sentimento
+  examples: |
+    - Estou me sentindo muito [triste](sentimento)
+    - Tenho estado muito [ansioso](sentimento)
+    - Me sinto muito [sozinho](sentimento)
+    - Estou com muito [medo](sentimento) do futuro
+    - Sinto que estou [sobrecarregado](sentimento)
+    - Não tenho [vontade](sentimento) de fazer nada
+    - eu to [agitado](sentimento)
+    - estou [pensativo](sentimento)
+    - não sei como me sinto
+    - as coisas estão meio estranhas
+- intent: afirmar_bem_estar
+  examples: |
+    - eu to feliz
+    - estou feliz
+    - me sinto feliz
+    - eu estou bem
+    - to bem
+    - estou ótimo
+    - me sentindo bem
+    - hoje foi um dia bom
+- intent: continuar_desabafo
+  examples: |
+    - Quero continuar falando
+    - Sim, quero falar mais
+    - Quero continuar desabafando
+- intent: nao_continuar_desabafo
+  examples: |
+    - Não quero falar mais sobre isso
+    - Podemos parar por aqui
+    - Não quero continuar
+- intent: negar_sugestao
+  examples: |
+    - não, obrigado
+    - não quero
+    - agora não
+
+# === INTENÇÕES DE EMERGÊNCIA E BUSCA POR AJUDA ===
+- intent: pedir_ajuda_urgente
+  examples: |
+    - eu não aguento mais viver
+    - quero sumir
+    - não quero mais viver
+    - estou pensando em me matar
+    - a vida não tem mais graça
+    - me sinto sem esperança
+- intent: buscar_ajuda_profissional
+  examples: |
+    - preciso de um psicólogo
+    - quero fazer terapia
+    - como acho ajuda profissional
+    - onde encontrar um terapeuta
+    - preciso de ajuda profissional
+    - quero começar a terapia
+
+# === INTENÇÕES DA BASE DE CONHECIMENTO ===
+- intent: buscar_info_ansiedade
+  examples: |
+    - o que é ansiedade?
+    - me fale sobre ansiedade
+    - como saber se tenho ansiedade
+- intent: buscar_info_depressao
+  examples: |
+    - o que é depressão?
+    - quais os sintomas da depressão
+    - como saber se tenho depressão
+- intent: buscar_info_tdah
+  examples: |
+    - o que é tdah?
+    - me fale sobre TDAH
+    - sintomas de tdah
+- intent: buscar_info_toc
+  examples: |
+    - o que é toc?
+    - fale sobre transtorno obsessivo compulsivo
+    - sintomas de toc
+- intent: buscar_info_tept
+  examples: |
+    - o que é tept?
+    - fale sobre estresse pós-traumático
+    - sintomas de tept
+
+# === INTENÇÕES DE CHITCHAT ===
+- intent: chitchat_como_vai
+  examples: |
+    - como vai?
+    - tudo bem?
+    - como você está?
+    - oi tudo bem
+    - olá, tudo bem?
+- intent: chitchat_quem_e_voce
+  examples: |
+    - quem é você?
+    - você é um robô?
+    - qual seu nome?
+- intent: agradecer
+  examples: |
+    - obrigado
+    - obrigada
+    - valeu
+    - muito obrigado
+# ==============================================================================
+# ENTIDADES - Declaração de todas as entidades usadas nos exemplos acima.
+# ==============================================================================
+entities:
+  - transtorno
+  - sentimento
+  - opcao
+  - frequencia

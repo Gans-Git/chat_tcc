@@ -1,0 +1,73 @@
+version: "3.1"
+
+rules:
+
+- rule: Saudação inicial
+  steps:
+  - intent: saudacao
+  - action: utter_saudacao
+
+- rule: Acionar ajuda urgente em caso de crise
+  steps:
+  - intent: pedir_ajuda_urgente
+  - action: utter_ajuda_urgente
+  - action: action_listen
+
+# --- LÓGICA DO MENU INICIAL (CENTRALIZADA NA ACTION DE DESPACHO) ---
+- rule: Lidar com a escolha do menu do usuário
+  steps:
+  - intent: escolher_conversa
+  - action: action_handle_menu_choice
+  - action: action_listen
+
+# --- LÓGICA DO FORMULÁRIO ---
+- rule: Finalizar o formulário de autoavaliação
+  condition:
+  - active_loop: autoavaliacao_form
+  steps:
+  - action: autoavaliacao_form
+  - active_loop: null
+  - action: action_autoavaliacao_form
+  - action: action_listen
+
+# --- REGRAS GERAIS E CHITCHAT ---
+- rule: Encerrar desabafo
+  steps:
+  - intent: nao_continuar_desabafo
+  - action: utter_encerrar
+  - action: action_listen
+
+- rule: Responder a "como vai"
+  steps:
+  - intent: chitchat_como_vai
+  - action: utter_chitchat_como_vai
+  - action: action_listen
+
+- rule: Responder a "quem é você"
+  steps:
+  - intent: chitchat_quem_e_voce
+  - action: utter_chitchat_quem_e_voce
+  - action: action_listen
+
+- rule: Responder a agradecimento
+  steps:
+  - intent: agradecer
+  - action: utter_agradecer
+  - action: action_listen
+
+- rule: Dizer tchau
+  steps:
+  - intent: despedida
+  - action: utter_despedida
+
+- rule: Oferecer ajuda profissional não-emergencial
+  steps:
+  - intent: buscar_ajuda_profissional
+  - action: utter_ajuda_profissional
+  - action: action_listen
+
+- rule: Lidar com NLU Fallback (quando o bot não entende)
+  steps:
+  - intent: nlu_fallback
+  - action: utter_default
+  - action: action_listen

@@ -1,0 +1,213 @@
+# ==============================================================================
+# DOMAIN.YML - O "UNIVERSO" DO BOT
+# Declara tudo o que o bot conhece: suas intenções, as informações que ele
+# pode guardar (slots), suas respostas prontas, suas ações customizadas, etc.
+# ==============================================================================
+
+version: '3.1'
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+# --- INTENÇÕES ---
+# Lista de todas as intenções que o bot é treinado para reconhecer.
+intents:
+  - saudacao
+  - escolher_conversa
+  - expressar_sentimento
+  - continuar_desabafo
+  - nao_continuar_desabafo
+  - pedir_ajuda_urgente
+  - afirmar_bem_estar
+  - negar_sugestao
+  - buscar_info_ansiedade
+  - buscar_info_depressao
+  - buscar_info_tdah
+  - buscar_info_toc
+  - buscar_info_tept
+  - chitchat_como_vai
+  - chitchat_quem_e_voce
+  - agradecer
+  - despedida
+  - informar_frequencia
+  - buscar_ajuda_profissional
+  - nlu_fallback
+
+# --- ENTIDADES ---
+# Lista de todas as informações estruturadas que o bot pode extrair do texto.
+entities:
+  - transtorno
+  - sentimento
+  - opcao
+  - frequencia
+
+# --- SLOTS ---
+# A memória do bot. Usado para armazenar informações durante a conversa.
+slots:
+  transtorno:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: transtorno
+  sentimento:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: sentimento
+  opcao:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: opcao
+  # Slots para o formulário de autoavaliação
+  sente_nervoso:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: frequencia
+  nao_consegue_parar_preocupacao:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: frequencia
+
+# --- RESPOSTAS (UTTERANCES) ---
+# Todo o texto pré-definido que o bot pode usar para responder.
+responses:
+  # --- Respostas de Fluxo Geral e Acolhimento ---
+  utter_saudacao:
+    - text: "Olá! Sou seu assistente de apoio à saúde mental. Como posso te ajudar hoje? Você pode escolher uma das opções:"
+      buttons:
+        - title: "Quero desabaafar"
+          payload: '/escolher_conversa{{"opcao": "desabafo"}}'
+        - title: "Quero aprender sobre saúde mental"
+          payload: '/escolher_conversa{{"opcao": "aprendizado"}}'
+        - title: "Quero fazer uma autoavaliação"
+          payload: '/escolher_conversa{{"opcao": "autoavaliacao"}}'
+        - title: "Quero uma dica de autocuidado"
+          payload: '/escolher_conversa{{"opcao": "dica_autocuidado"}}'
+    - text: "Oi! Que bom te ver por aqui. Eu sou um bot de apoio emocional. O que você gostaria de fazer?"
+      buttons:
+        - title: "Quero desabafar"
+          payload: '/escolher_conversa{{"opcao": "desabafo"}}'
+        - title: "Quero aprender sobre saúde mental"
+          payload: '/escolher_conversa{{"opcao": "aprendizado"}}'
+        - title: "Quero fazer uma autoavaliação"
+          payload: '/escolher_conversa{{"opcao": "autoavaliacao"}}'
+        - title: "Quero uma dica de autocuidado"
+          payload: '/escolher_conversa{{"opcao": "dica_autocuidado"}}'
+  utter_default:
+    - text: "Desculpe, não entendi muito bem o que você quis dizer. Poderia tentar reformular?"
+    - text: "Hmm, não tenho certeza se compreendi. Lembre-se que você pode escolher uma das opções do menu a qualquer momento se preferir."
+  utter_ok_sem_problemas:
+    - text: "Tudo bem, sem problemas! Fico feliz em continuar a conversa."
+
+  # --- Respostas do Fluxo de Desabafo ---
+  utter_desabafo:
+    - text: "Claro, estou aqui pra você. Sinta-se à vontade para compartilhar o que está no seu coração. Lembre-se, este é um espaço seguro."
+    - text: "Com certeza. Pode falar o que estiver sentindo. Estou aqui para te ouvir sem julgamentos."
+    - text: "O espaço é todo seu. Pode começar a digitar quando se sentir confortável. Estou ouvindo."
+  utter_apoio:
+    - text: "Obrigado por compartilhar. Quer continuar falando sobre isso ou prefere mudar de assunto?"
+      buttons:
+        - title: "Quero continuar"
+          payload: '/continuar_desabafo'
+        - title: "Prefiro parar por aqui"
+          payload: '/nao_continuar_desabafo'
+  utter_encerrar:
+   - text: "Entendido. Lembre-se de ser gentil consigo mesmo(a). Estarei por aqui se precisar conversar de novo."
+   - text: "Tudo bem. Fico feliz em ter conversado com você. Se cuide e saiba que pode voltar quando quiser."
+
+  # --- Respostas de Chitchat e Afirmações ---
+  utter_que_bom:
+    - text: "Que notícia maravilhosa! Fico muito feliz em saber que você está se sentindo bem. 🎉"
+    - text: "Isso é ótimo! Que bom que você está tendo um bom dia. Continue assim!"
+  utter_chitchat_como_vai:
+    - text: "Eu sou um sistema de IA, então não tenho sentimentos, mas estou 100% operacional para te ajudar! Como você está se sentindo?"
+  utter_chitchat_quem_e_voce:
+    - text: "Eu sou um assistente virtual criado para ser um espaço seguro de apoio à saúde mental. Estou aqui para conversar e fornecer informações, mas é importante lembrar que não substituo um profissional de saúde."
+  utter_agradecer:
+    - text: "De nada! Fico feliz em poder ajudar. 😊"
+    - text: "É para isso que estou aqui! Se precisar de mais alguma coisa, é só chamar."
+  utter_despedida:
+    - text: "Tudo bem, até mais! Lembre-se de se cuidar."
+    - text: "Até logo! Estarei por aqui se precisar conversar de novo."
+
+  # --- Respostas da Base de Conhecimento ---
+  utter_aprendizado:
+    - text: "Ótima escolha! Posso te falar sobre Ansiedade, Depressão, TDAH, TOC e TEPT. Qual tema te interessa mais?"
+  utter_info_ansiedade:
+    - text: "A ansiedade é uma reação normal ao estresse. Ela se torna um transtorno quando é excessiva e começa a atrapalhar sua vida diária. Sintomas comuns incluem preocupação constante, tensão e medo. É muito importante lembrar que apenas um profissional de saúde pode fazer um diagnóstico."
+  utter_info_depressao:
+    - text: "A depressão é um transtorno que afeta o humor, causando uma tristeza profunda e persistente, além da perda de interesse em atividades que antes eram prazerosas. Se você se identifica com isso, conversar com um médico ou psicólogo é o passo mais importante."
+  utter_info_tdah:
+    - text: "O TDAH, ou Transtorno de Déficit de Atenção e Hiperatividade, é caracterizado por um padrão de desatenção e/ou hiperatividade-impulsividade. Os sintomas podem incluir dificuldade de manter o foco e agir por impulso. O diagnóstico preciso só pode ser feito por um profissional."
+  utter_info_toc:
+    - text: "O TOC, ou Transtorno Obsessivo-Compulsivo, envolve pensamentos intrusivos (obsessões) e/ou comportamentos repetitivos (compulsões). É uma condição que pode causar grande angústia, e conversar com um profissional pode trazer alívio e estratégias para lidar com os sintomas."
+  utter_info_tept:
+    - text: "O TEPT, ou Transtorno de Estresse Pós-Traumático, pode se desenvolver após uma pessoa vivenciar um evento traumático. Os sintomas incluem flashbacks, pesadelos e ansiedade intensa. A ajuda de um terapeuta é fundamental para a recuperação."
+  utter_dica_generica:
+    - text: "Claro! Uma dica simples: respire fundo contando até 4, segure o ar por 4 segundos e solte lentamente em 6 segundos. Repetir isso algumas vezes ajuda a acalmar o sistema nervoso."
+    - text: "Que tal fazer uma pequena pausa? Alongar o corpo por 5 minutos ou simplesmente olhar pela janela já ajuda a clarear a mente."
+
+  # --- Respostas do Formulário de Autoavaliação ---
+  utter_disclaimer_autoavaliacao:
+    - text: "Vamos começar. Lembre-se: esta é uma breve autoavaliação e **NÃO substitui um diagnóstico profissional**. O objetivo é apenas te ajudar a refletir sobre seus sentimentos."
+  utter_ask_sente_nervoso:
+    - text: "Ok, primeira pergunta: Nas últimas 2 semanas, com que frequência você se sentiu nervoso(a), ansioso(a) ou muito tenso(a)?"
+      buttons:
+        - title: "Nenhuma vez"
+          payload: '/informar_frequencia{{"frequencia": "0"}}'
+        - title: "Vários dias"
+          payload: '/informar_frequencia{{"frequencia": "1"}}'
+        - title: "Mais da metade dos dias"
+          payload: '/informar_frequencia{{"frequencia": "2"}}'
+        - title: "Quase todos os dias"
+          payload: '/informar_frequencia{{"frequencia": "3"}}'
+  utter_ask_nao_consegue_parar_preocupacao:
+    - text: "Entendido. Última pergunta: Nas últimas 2 semanas, com que frequência você não conseguiu impedir ou controlar as preocupações?"
+      buttons:
+        - title: "Nenhuma vez"
+          payload: '/informar_frequencia{{"frequencia": "0"}}'
+        - title: "Vários dias"
+          payload: '/informar_frequencia{{"frequencia": "1"}}'
+        - title: "Mais da metade dos dias"
+          payload: '/informar_frequencia{{"frequencia": "2"}}'
+        - title: "Quase todos os dias"
+          payload: '/informar_frequencia{{"frequencia": "3"}}'
+  utter_submit_autoavaliacao:
+    - text: "Obrigado por responder. A autoavaliação está concluída."
+
+  # --- Respostas de Encaminhamento e Emergência ---
+  utter_ajuda_urgente:
+    - text: "Percebi que você está passando por um momento muito difícil e agradeço por compartilhar isso. Por favor, não hesite em procurar ajuda imediatamente. **Ligue para o CVV (Centro de Valorização da Vida) no número 188.** A ligação é gratuita e eles estão disponíveis 24 horas por dia para te ouvir. Você não está sozinho(a)."
+  utter_ajuda_profissional:
+    - text: "Buscar ajuda profissional é um passo muito corajoso e importante. Separei alguns recursos que podem te ajudar a começar. Lembre-se que não tenho afiliação com nenhum deles, são apenas sugestões:"
+      buttons:
+        - title: "Mapa da Saúde Mental"
+          payload: "https://mapasaudemental.com.br/"
+        - title: "Pode Falar (canal de ajuda)"
+          payload: "https://www.podefalar.org.br/"
+        - title: "Zenklub (plataforma)"
+          payload: "https://zenklub.com.br/"
+
+# --- AÇÕES CUSTOMIZADAS ---
+# Lista de todas as ações definidas no arquivo actions.py.
+actions:
+  - action_analisar_e_sugerir
+  - action_autoavaliacao_form
+  - action_handle_menu_choice
+
+# --- FORMULÁRIOS ---
+# Define os formulários, seus nomes e os slots que eles precisam preencher.
+forms:
+  autoavaliacao_form:
+    required_slots:
+      - sente_nervoso
+      - nao_consegue_parar_preocupacao
